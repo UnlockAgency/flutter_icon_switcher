@@ -14,13 +14,13 @@ public class IconSwitcherPlugin: NSObject, FlutterPlugin {
       let support = IconSwitcherManager.instance.supportsAlternateIcons
       result(support)
     case "setAlternateIconName":
-      guard let arguments = call.arguments as? [String: Any], let name = arguments["name"] as? String else {
+      guard let arguments = call.arguments as? [String: Any] else {
         result(FlutterError(code: "418", message: "Invalid data passed", details: nil))
         return
       }
 
       IconSwitcherManager.instance.setAlternateIconName(
-        name: name, 
+        name: arguments["name"] as? String, 
         result: result
       )
     case "getIconName":

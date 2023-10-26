@@ -16,8 +16,8 @@ class MethodChannelIconSwitcher extends IconSwitcherPlatform {
   }
 
   @override
-  Future<void> setAlternateIconName(String? name) async {
-    await methodChannel.invokeMethod<void>('setAlternateIconName', {'name': name});
+  Future<String?> setAlternateIconName(String? name) async {
+    return await methodChannel.invokeMethod<String?>('setAlternateIconName', {'name': name});
   }
 
   @override

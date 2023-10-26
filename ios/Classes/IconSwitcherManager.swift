@@ -1,3 +1,7 @@
+import Foundation
+import Flutter
+import UIKit
+
 class IconSwitcherManager { 
     static let instance = IconSwitcherManager();
 
@@ -9,17 +13,20 @@ class IconSwitcherManager {
         return UIApplication.shared.supportsAlternateIcons;
     }
 
-    public func setAlternateIconName(name: String, result: FlutterResult) -> Void { 
-        guard current != name, UIApplication.shared.supportsAlternateIcons else { 
+    public func setAlternateIconName(name: String? = nil, result: @escaping FlutterResult) -> Void { 
+        guard currentIcon != name, UIApplication.shared.supportsAlternateIcons else { 
+            result(currentIcon)
             return
         }
 
-        UIApplication.shared.setAlternateIconName(appIcon.name) { error in
+        UIApplication.shared.setAlternateIconName(name) { [weak self] error in
             if let error = error {
-                print("Error setting alternate icon \(appIcon.name ?? ""): \(error.localizedDescription)")
+                print("Error setting alternate icon \(name ?? "primary"): \(error.localizedDescription)")
+                result(FlutterError(code: "418", message: "The icon could not be changed: \(error.localizedDescription)", details: nil))
+                return
             }
 
-            //completion?(error != nil)
+            result(self?.currentIcon ?? nil)
         }
     }
 }

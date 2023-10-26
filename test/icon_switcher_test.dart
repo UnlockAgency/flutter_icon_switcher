@@ -11,8 +11,8 @@ class MockIconSwitcherPlatform with MockPlatformInterfaceMixin implements IconSw
   }
 
   @override
-  Future<void> setAlternateIconName(String? name) async {
-    return;
+  Future<String?> setAlternateIconName(String? name) async {
+    return null;
   }
 
   @override

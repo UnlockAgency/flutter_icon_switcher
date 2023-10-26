@@ -27,7 +27,7 @@ abstract class IconSwitcherPlatform extends PlatformInterface {
     throw UnimplementedError('supportsAlternateIcons() has not been implemented.');
   }
 
-  Future<void> setAlternateIconName(String? name) {
+  Future<String?> setAlternateIconName(String? name) {
     throw UnimplementedError('setAlternateIconName() has not been implemented.');
   }
 
