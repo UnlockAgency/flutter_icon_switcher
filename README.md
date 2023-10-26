@@ -25,6 +25,34 @@ Where the `ref` can be any valid Git reference, for instance: branch name or tag
 
 Next, for each alternate icon, add a new entry under `CFBundleAlternateIcons`. The name of the entry is the name of the icon which will be used as reference in the code. The string value of the item is the name of the icon file that you added in the project.
 
+You'll end up with something like the example below:
+
+```plist
+<key>CFBundleIcons</key>
+<dict>
+  <key>CFBundlePrimaryIcon</key>
+  <dict>
+    <key>CFBundleIconFiles</key>
+    <array>
+      <string>app-icon</string>
+    </array>
+    <key>UIPrerenderedIcon</key>
+    <false/>
+  </dict>
+  <key>CFBundleAlternateIcons</key>
+  <dict>
+    <key>app-icon-son</key> // This is your reference in code
+    <dict>
+      <key>CFBundleIconFiles</key>
+      <array>
+        <string>app-icon-son</string> // This is the name of the file, excluding @2x.png
+      </array>
+      <key>UIPrerenderedIcon</key>
+      <false/>
+    </dict>
+  </dict>
+</dict>
+```
 
 ## Usage
 
@@ -32,5 +60,42 @@ TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
 
 ```dart
-const like = 'sample';
+FutureBuilder(
+  future: Future.wait([
+    // Check if the app supports multiple icons, iOS only
+    _iconSwitcher.supportsAlternateIcons(),
+    // Get the name of the icon currently configured
+    _iconSwitcher.getIconName(),
+  ]),
+  builder: (context, snapshot) {
+    return Container(
+      child: Column(
+        children: [
+          Text('Can switch icons: ${snapshot.data?[0]}'),
+          Text('Current icon is: ${snapshot.data?[1]}'),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                child: Text('Primary'),
+                onPressed: () async {
+                  // Switch back to the default app icon
+                  await _iconSwitcher.setAlternateIconName();
+                },
+              ),
+              ElevatedButton(
+                child: Text('Primary'),
+                onPressed: () async {
+                  // Switch to a different icon
+                  await _iconSwitcher.setAlternateIconName(name: 'app-icon-son');
+                },
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  },
+);
 ```
