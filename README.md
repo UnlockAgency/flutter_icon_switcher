@@ -27,7 +27,7 @@ Next, for each alternate icon, add a new entry under `CFBundleAlternateIcons`. T
 
 You'll end up with something like the example below:
 
-```plist
+```
 <key>CFBundleIcons</key>
 <dict>
   <key>CFBundlePrimaryIcon</key>
@@ -56,7 +56,6 @@ You'll end up with something like the example below:
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder.
 
 ```dart
